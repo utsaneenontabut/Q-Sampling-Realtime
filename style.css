@@ -1,0 +1,196 @@
+/* ===================================
+   Q-Sampling Realtime
+   =================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    color:#333;
+}
+
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+/* Header */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+header h1{
+    color:#1565C0;
+    font-size:28px;
+}
+
+#serverStatus{
+    background:#4CAF50;
+    color:white;
+    padding:8px 16px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+/* Dashboard */
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.card h2{
+    font-size:42px;
+    color:#1565C0;
+}
+
+.card p{
+    margin-top:8px;
+    color:#666;
+}
+
+/* Room */
+
+#roomContainer{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.roomCard{
+    background:white;
+    border-radius:10px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    cursor:pointer;
+    transition:.2s;
+}
+
+.roomCard:hover{
+    transform:translateY(-2px);
+}
+
+.roomName{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.roomStatus{
+    margin-top:10px;
+    font-size:15px;
+}
+
+/* Search */
+
+#txtSearch{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    margin:20px 0;
+    font-size:16px;
+}
+
+/* Table */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+thead{
+    background:#1565C0;
+    color:white;
+}
+
+th,
+td{
+    padding:14px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+}
+
+tbody tr:hover{
+    background:#f8f9fa;
+}
+
+/* Floating Button */
+
+#scanButton{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+
+    width:70px;
+    height:70px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#1565C0;
+    color:white;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.dashboard{
+
+grid-template-columns:1fr;
+
+}
+
+header{
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.card h2{
+
+font-size:34px;
+
+}
+
+table{
+
+font-size:13px;
+
+}
+
+}

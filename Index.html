@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Q-Sampling Realtime</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <header>
+
+        <h1>Q-Sampling Realtime</h1>
+
+        <div id="serverStatus">
+            🟢 Connected
+        </div>
+
+    </header>
+
+
+    <!-- Dashboard -->
+
+    <section class="dashboard">
+
+        <div class="card">
+
+            <h2 id="samplingNow">0</h2>
+
+            <p>Sampling Now</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2 id="completedToday">0</h2>
+
+            <p>Completed</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2 id="totalToday">0</h2>
+
+            <p>Total Today</p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Room Status -->
+
+    <section>
+
+        <h2>Room Status</h2>
+
+        <div id="roomContainer">
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Search -->
+
+    <section>
+
+        <input
+            type="text"
+            id="txtSearch"
+            placeholder="Search Code / Batch">
+
+    </section>
+
+
+
+    <!-- Data Table -->
+
+    <section>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Room</th>
+
+                <th>Code</th>
+
+                <th>Batch</th>
+
+                <th>Status</th>
+
+                <th>Inspector</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="tblBody">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+
+    <!-- Floating Button -->
+
+    <button
+        id="scanButton">
+
+        📷 Scan QR
+
+    </button>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
