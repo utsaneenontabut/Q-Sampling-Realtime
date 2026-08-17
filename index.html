@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1565C0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Q-Sampling">
+<title>Q-Sampling Realtime</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<header>
+  <div>
+    <h1>Q-Sampling Realtime</h1>
+    <div class="sub">Realtime Packaging Inspection</div>
+  </div>
+  <div id="serverStatus" class="statusPill offline">🔴 Offline</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="samplingTab">📝 Sampling</button>
+  <button class="tab" data-tab="dashboardTab">📊 Dashboard</button>
+  <button class="tab" data-tab="historyTab">📋 History</button>
+  <button class="tab" data-tab="settingsTab">⚙️ Settings</button>
+</nav>
+
+<section id="samplingTab" class="tabPanel active">
+  <div class="panel">
+    <h2>Sampling</h2>
+    <div class="grid2">
+      <div>
+        <label>Room</label>
+        <select id="room"></select>
+      </div>
+      <div>
+        <label>Inspector</label>
+        <select id="inspector"></select>
+      </div>
+    </div>
+
+    <label>Status</label>
+    <select id="status">
+      <option value="Start Sampling">Start Sampling</option>
+      <option value="Finish Sampling">Finish Sampling</option>
+    </select>
+
+    <div class="grid2">
+      <div>
+        <label>Code</label>
+        <input id="code" autocomplete="off" placeholder="กรอก Code">
+      </div>
+      <div>
+        <label>Batch</label>
+        <input id="batch" autocomplete="off" placeholder="กรอก Batch">
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div>
+        <label id="cartonLabel">Carton Qty IN</label>
+        <input id="cartonQty" type="number" min="0" inputmode="numeric">
+      </div>
+      <div>
+        <label>No. Carton</label>
+        <input id="noCarton" autocomplete="off">
+      </div>
+    </div>
+
+    <button id="btnSave" class="primary">SAVE</button>
+  </div>
+
+  <div class="panel">
+    <button id="scanButton" class="secondary">📷 Scan QR</button>
+    <div id="scanHint" class="hint">สแกนเพื่อเติม Code / Batch ถ้า QR มีข้อมูล</div>
+  </div>
+</section>
+
+<section id="dashboardTab" class="tabPanel">
+  <div class="dashboard">
+    <div class="card"><h2 id="samplingNow">0</h2><p>Sampling Now</p></div>
+    <div class="card"><h2 id="completedToday">0</h2><p>Completed Today</p></div>
+    <div class="card"><h2 id="totalToday">0</h2><p>Total Today</p></div>
+  </div>
+
+  <div class="panel">
+    <div class="panelHead">
+      <h2>Room Status</h2>
+      <button id="btnRefresh" class="smallBtn">↻ Refresh</button>
+    </div>
+    <div id="roomContainer" class="roomGrid"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Sampling Now</h2>
+    <div class="tableWrap">
+      <table>
+        <thead><tr><th>Room</th><th>Code</th><th>Batch</th><th>Inspector</th><th>Status</th></tr></thead>
+        <tbody id="nowBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="historyTab" class="tabPanel">
+  <div class="panel">
+    <div class="panelHead">
+      <h2>History</h2>
+      <button id="btnExport" class="smallBtn">⬇ Export Excel</button>
+    </div>
+    <input id="txtSearch" placeholder="ค้นหา Code / Batch / Room / Inspector">
+    <div class="grid2">
+      <div>
+        <label>Room</label>
+        <select id="historyRoom"><option value="">ทุกห้อง</option></select>
+      </div>
+      <div>
+        <label>Status</label>
+        <select id="historyStatus">
+          <option value="">ทั้งหมด</option>
+          <option value="Sampling">Sampling</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Room</th><th>Code</th><th>Batch</th><th>Start</th><th>Finish</th><th>Duration</th><th>Status</th><th>Inspector</th></tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="settingsTab" class="tabPanel">
+  <div class="grid2">
+    <div class="panel">
+      <h2>จัดการ Room</h2>
+      <div class="inlineForm">
+        <input id="newRoom" placeholder="เช่น B.15">
+        <button id="addRoom" class="primary">เพิ่ม</button>
+      </div>
+      <div id="roomSettings"></div>
+    </div>
+
+    <div class="panel">
+      <h2>จัดการ Inspector</h2>
+      <div class="inlineForm">
+        <input id="newInspector" placeholder="ชื่อ Inspector">
+        <button id="addInspector" class="primary">เพิ่ม</button>
+      </div>
+      <div id="inspectorSettings"></div>
+    </div>
+  </div>
+  <div class="hint">การลบ Room/Inspector จะเป็นการปิดใช้งาน เพื่อไม่กระทบข้อมูลย้อนหลัง</div>
+</section>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="scannerModal" class="modal hidden">
+  <div class="modalBox">
+    <div class="panelHead"><h2>Scan QR</h2><button id="closeScanner" class="iconBtn">✕</button></div>
+    <video id="qrVideo" playsinline></video>
+    <p class="hint">อนุญาตการใช้กล้อง แล้วหัน QR ให้อยู่ในกรอบ</p>
+    <input id="qrManual" placeholder="หรือวางข้อความ QR ที่นี่">
+    <button id="useQrManual" class="secondary">ใช้ข้อมูลนี้</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
