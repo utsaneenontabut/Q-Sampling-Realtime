@@ -1,0 +1,9 @@
+{
+  "name": "Q-Sampling Realtime",
+  "short_name": "Q-Sampling",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f9",
+  "theme_color": "#1565C0",
+  "lang": "th"
+}
